@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import google.generativeai as genai  # Add this
+
 
 # --- DATA PREPARATION (Module 2 Skills) ---
 @st.cache_data
@@ -27,9 +29,6 @@ segment = st.sidebar.selectbox("Customer Segment", df['Segment'].unique())
 filtered_df = df[(df['Region'].isin(region)) & (df['Segment'] == segment)]
 
 # --- 1. IMPORTS (At the very top) ---
-import streamlit as st
-import pandas as pd
-import google.generativeai as genai  # Add this
 
 # --- 2. DATA LOADING & FILTERING ---
 df = pd.read_csv('samplesuperstore.csv')
