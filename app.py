@@ -128,7 +128,8 @@ with tab5:
             response = agent.run(user_query)
             st.write(response)
 
-with tab6: # Update your tab list to include a 6th tab: "📈 Phase 3: Forecaster"
+with tab6: 
+# Update your tab list to include a 6th tab: "📈 Phase 3: Forecaster"
     st.subheader("Phase 3: AI Sales Forecaster")
     st.write("Predicting future revenue trends using Linear Regression.")
     
