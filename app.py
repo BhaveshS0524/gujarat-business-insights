@@ -115,7 +115,9 @@ with tab2:
     # KPI: Conversion (Simulated based on footfall)
     footfall = 5000 # Example Monthly Footfall
     conversion = (total_orders / footfall) * 100
-    m_col4.metric("Conversion Rate", f"{conversion:.1f}%")    col1, col2 = st.columns(2)
+    m_col4.metric("Conversion Rate", f"{conversion:.1f}%")    
+
+col1, col2 = st.columns(2)
     with col1:
         st.write("**Top Loss-Making Products**")
         loss_df = filtered_df[filtered_df['Profit'] < 0].groupby('Product Name')['Profit'].sum().nsmallest(5).reset_index()
