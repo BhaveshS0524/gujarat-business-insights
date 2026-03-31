@@ -13,10 +13,10 @@ st.set_page_config(page_title="Gujarat Business Insights", layout="wide")
 
 # Setup AI Architect Layers (Phase 1 & 2)
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-gemini_model = genai.GenerativeModel('gemini-pro')
+gemini_model = genai.GenerativeModel('gemini-1.5-flash')
 
 # LangChain Agent for Phase 2
-llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=st.secrets["GEMINI_API_KEY"])
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=st.secrets["GEMINI_API_KEY"])
 
 def get_ai_insight(data_summary):
     prompt = f"""
