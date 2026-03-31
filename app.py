@@ -16,7 +16,7 @@ genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 gemini_model = genai.GenerativeModel('gemini-pro')
 
 # LangChain Agent for Phase 2
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=st.secrets["GEMINI_API_KEY"])
+llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=st.secrets["GEMINI_API_KEY"])
 
 def get_ai_insight(data_summary):
     prompt = f"""
@@ -57,13 +57,12 @@ st.title("🚀 Gujarat Retail Intelligence Portal")
 st.markdown(f"**Strategic Analysis for:** {segment_selection} Segment")
 
 # Unified Tab Architecture
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📊 Executive Summary", 
     "🔍 Operational Deep Dive", 
     "🧪 Profit Optimizer", 
     "🤖 Phase 1: AI Consultant",
     "🕵️ Phase 2: Agentic AI Strategist"
-    "📈 Phase 3: Forecaster"
 ])
 
 with tab1:
@@ -115,32 +114,18 @@ with tab4:
             advice = get_ai_insight(summary)
             st.markdown(advice)
 
-with tab5: # Phase 2
+with tab5:
     st.subheader("Phase 2: Agentic AI Strategist")
+    st.info("Ask ad-hoc questions (e.g., 'Which city has the highest shipping cost per order?')")
+    
+    # Initialize Agent for CSV
     agent = create_csv_agent(llm, 'samplesuperstore.csv', verbose=True, allow_dangerous_code=True)
+    
     user_query = st.text_input("Enter your business question:")
     if user_query:
-        with st.spinner("Analyzing..."):
-            st.write(agent.run(user_query))
-
-with tab6: # Phase 3 (The Missing Piece)
-    st.subheader("Phase 3: AI Sales Forecaster")
-    forecast_df = filtered_df.groupby('Order Date')['Sales'].sum().reset_index()
-    forecast_df['Day_Ordinal'] = forecast_df['Order Date'].map(pd.Timestamp.toordinal)
-    
-    if len(forecast_df) > 5:
-        X = forecast_df[['Day_Ordinal']].values
-        y = forecast_df['Sales'].values
-        model_lr = LinearRegression().fit(X, y)
-        
-        future_days = np.array([X[-1][0] + i for i in range(1, 31)]).reshape(-1, 1)
-        predictions = model_lr.predict(future_days)
-        
-        st.success(f"Projected Revenue (Next 30 Days): ₹{predictions.sum():,.0f}")
-        fig_forecast = px.line(x=range(1, 31), y=predictions, title="30-Day Forward Forecast")
-        st.plotly_chart(fig_forecast)
-    else:
-        st.warning("Insufficient data for forecasting.")
+        with st.spinner("Agent is exploring data architecture..."):
+            response = agent.run(user_query)
+            st.write(response)
 
 
 # Sidebar Footer
