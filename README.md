@@ -4,7 +4,7 @@
 ---
 
 ## 🏗️ Project Overview
-This production-grade Intelligence Portal is designed to empower Small and Medium Enterprises (SMEs) in the Greater Ahmedabad Area. Moving beyond traditional dashboards, this solution integrates **Agentic AI** and **Machine Learning** to transform raw operational data into high-fidelity executive strategy.
+This Intelligence Portal is a production-grade decision support system engineered for SMEs in the Greater Ahmedabad Area. By bridging 15 years of corporate strategy with **Agentic AI** and **Machine Learning**, this solution transforms raw retail data into actionable executive insights.
 
 ### 🚀 [Live Strategic Portal](https://gujarat-business-insights-bhavesh.streamlit.app/)
 
@@ -12,33 +12,43 @@ This production-grade Intelligence Portal is designed to empower Small and Mediu
 
 ## 🛠️ Multi-Phase Intelligent Architecture
 
-The portal is structured into five core strategic modules, providing a complete Data Maturity journey:
+The portal features a specialized 6-tab interface designed for distinct corporate stakeholders:
 
-### 1. 📊 Executive Summary & Operational Deep Dive
-* **Descriptive Analytics:** High-level tracking of Total Sales, Net Profit, and Regional Margins across localized Gujarat hubs (Ahmedabad, Surat, Rajkot, Vadodara).
-* **Risk Identification:** Automated detection of top loss-making products to safeguard bottom-line performance.
+### 1. 📈 Owner's Strategic Overview (Financial Efficiency)
+* **Net Profit Tracking:** Real-time monitoring of achieved profit vs. monthly strategic targets.
+* **Sales per Sq. Ft. (SSPD):** Advanced metric for measuring retail asset utilization and real estate efficiency.
+* **Budget vs. Profit:** High-level analysis of operational expenditure (Op-Ex) against net earnings.
 
-### 2. 🧪 Profit Optimizer (Diagnostic)
-* **What-If Simulation:** A dynamic logic engine allowing stakeholders to simulate the impact of discount adjustments on net profitability in real-time.
+### 2. ⚙️ Manager's Operational Desk (Sales Efficiency)
+* **Transaction Intelligence:** Automated calculation of **Average Bill Value (ABV)**, **Average Sale Price (ASP)**, and **Units Per Transaction (UPT)**.
+* **Conversion Analytics:** Tracking of store efficiency based on simulated footfall data.
+* **Operational Risk:** Identification of the top 5 loss-making products requiring immediate management intervention.
 
-### 3. 🤖 Phase 1: AI Strategic Consultant
-* **Automated Executive Insights:** Powered by **Gemini 1.5 Flash**, this module synthesizes current data filters into 3 actionable, high-impact business strategies.
+### 3. 🧪 Profit Optimizer (Diagnostic)
+* **What-If Logic Engine:** A simulation tool for executives to forecast the impact of discount reductions on overall net margins.
 
-### 4. 🕵️ Phase 2: Agentic AI Strategist
-* **Natural Language Query (NLQ):** An advanced **LangChain-based CSV Agent** that allows managers to "interrogate" the data architecture using plain English for ad-hoc business intelligence.
+### 4. 🤖 Phase 1: AI Strategic Consultant
+* **Executive Insights:** Powered by **Gemini 1.5 Flash**, providing automated, high-impact strategies based on current filtered metrics.
 
-### 5. 📈 Phase 3: AI Sales Forecaster (In-Development)
-* **Predictive Modeling:** Utilizing **Linear Regression** (Scikit-Learn) to project 30-day revenue trends based on historical Day-Ordinal data.
+### 5. 🕵️ Phase 2: Agentic AI Strategist
+* **Natural Language Query (NLQ):** A **LangChain-based CSV Agent** allowing stakeholders to "interrogate" the data architecture using plain English.
+
+### 6. 📈 Phase 3: AI Sales Forecaster
+* **Predictive Modeling:** Implements **Linear Regression** (Scikit-Learn) to project 30-day revenue trends based on historical Day-Ordinal data.
 
 ---
 
 ## 💻 Technical Stack
-* **Language:** Python 3.14 (Bleeding-edge deployment)
-* **AI Frameworks:** Google Generative AI (Gemini 1.5), LangChain
-* **Data Science:** Pandas, Scikit-Learn, NumPy
-* **Visualization:** Plotly Express, Streamlit
+* **AI Models:** Google Gemini 1.5 Flash (via `models/` prefix for stability).
+* **Agentic Framework:** LangChain (CSV Agent).
+* **Data Science:** Python 3.14, Pandas, Scikit-Learn, Plotly Express.
+* **Deployment:** Streamlit Cloud with secure Secret Management.
 
 ---
+
+## 🤝 Let's Connect
+I specialize in transforming raw corporate data into high-fidelity AI solutions and automated reporting systems.
+
 ## 👤 About the Developer
 # 🤝 Strategy & Consulting
 **Bhavesh Suryavanshi** 
