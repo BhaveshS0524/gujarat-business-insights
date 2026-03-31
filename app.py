@@ -4,6 +4,9 @@ import plotly.express as px
 import google.generativeai as genai
 from langchain_experimental.agents import create_csv_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
 
 # --- 1. CONFIGURATION & ARCHITECT SETUP ---
 st.set_page_config(page_title="Gujarat Business Insights", layout="wide")
@@ -123,6 +126,34 @@ with tab5:
         with st.spinner("Agent is exploring data architecture..."):
             response = agent.run(user_query)
             st.write(response)
+
+with tab5: # Update your tab list to include a 6th tab: "📈 Phase 3: Forecaster"
+    st.subheader("Phase 3: AI Sales Forecaster")
+    st.write("Predicting future revenue trends using Linear Regression.")
+    
+    # Prepare time-series data for modeling
+    forecast_df = filtered_df.groupby('Order Date')['Sales'].sum().reset_index()
+    forecast_df['Day_Ordinal'] = forecast_df['Order Date'].map(pd.Timestamp.toordinal)
+    
+    if len(forecast_df) > 5:
+        X = forecast_df[['Day_Ordinal']].values
+        y = forecast_df['Sales'].values
+        
+        model_lr = LinearRegression().fit(X, y)
+        
+        # Predict for next 30 days
+        future_days = np.array([X[-1][0] + i for i in range(1, 31)]).reshape(-1, 1)
+        predictions = model_lr.predict(future_days)
+        
+        st.success(f"Projected Revenue for next 30 days: ₹{predictions.sum():,.0f}")
+        
+        # Simple Forecast Chart
+        fig_forecast = px.line(x=range(1, 31), y=predictions, 
+                               labels={'x': 'Days into Future', 'y': 'Predicted Sales'},
+                               title="30-Day Forward Forecast")
+        st.plotly_chart(fig_forecast, use_container_width=True)
+    else:
+        st.warning("Insufficient historical data in this cluster to generate a reliable forecast.")
 
 # Sidebar Footer
 st.sidebar.markdown("---")
