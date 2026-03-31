@@ -3,3 +3,7 @@ streamlit>=1.30.0
 plotly
 altair<5
 google-generativeai
+langchain
+langchain-experimental
+langchain-google-genai
+tabulate
