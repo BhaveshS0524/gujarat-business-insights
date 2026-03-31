@@ -115,47 +115,33 @@ with tab4:
             advice = get_ai_insight(summary)
             st.markdown(advice)
 
-with tab5:
+with tab5: # Phase 2
     st.subheader("Phase 2: Agentic AI Strategist")
-    st.info("Ask ad-hoc questions (e.g., 'Which city has the highest shipping cost per order?')")
-    
-    # Initialize Agent for CSV
     agent = create_csv_agent(llm, 'samplesuperstore.csv', verbose=True, allow_dangerous_code=True)
-    
     user_query = st.text_input("Enter your business question:")
     if user_query:
-        with st.spinner("Agent is exploring data architecture..."):
-            response = agent.run(user_query)
-            st.write(response)
+        with st.spinner("Analyzing..."):
+            st.write(agent.run(user_query))
 
-with tab6: 
-# Update your tab list to include a 6th tab: "📈 Phase 3: Forecaster"
+with tab6: # Phase 3 (The Missing Piece)
     st.subheader("Phase 3: AI Sales Forecaster")
-    st.write("Predicting future revenue trends using Linear Regression.")
-    
-    # Prepare time-series data for modeling
     forecast_df = filtered_df.groupby('Order Date')['Sales'].sum().reset_index()
     forecast_df['Day_Ordinal'] = forecast_df['Order Date'].map(pd.Timestamp.toordinal)
     
     if len(forecast_df) > 5:
         X = forecast_df[['Day_Ordinal']].values
         y = forecast_df['Sales'].values
-        
         model_lr = LinearRegression().fit(X, y)
         
-        # Predict for next 30 days
         future_days = np.array([X[-1][0] + i for i in range(1, 31)]).reshape(-1, 1)
         predictions = model_lr.predict(future_days)
         
-        st.success(f"Projected Revenue for next 30 days: ₹{predictions.sum():,.0f}")
-        
-        # Simple Forecast Chart
-        fig_forecast = px.line(x=range(1, 31), y=predictions, 
-                               labels={'x': 'Days into Future', 'y': 'Predicted Sales'},
-                               title="30-Day Forward Forecast")
-        st.plotly_chart(fig_forecast, use_container_width=True)
+        st.success(f"Projected Revenue (Next 30 Days): ₹{predictions.sum():,.0f}")
+        fig_forecast = px.line(x=range(1, 31), y=predictions, title="30-Day Forward Forecast")
+        st.plotly_chart(fig_forecast)
     else:
-        st.warning("Insufficient historical data in this cluster to generate a reliable forecast.")
+        st.warning("Insufficient data for forecasting.")
+
 
 # Sidebar Footer
 st.sidebar.markdown("---")
