@@ -10,13 +10,13 @@ import numpy as np
 # --- 1. CONFIGURATION & ARCHITECT SETUP ---
 st.set_page_config(page_title="Gujarat Business Insights", layout="wide")
 
-# Setup AI Architect Layers (Gemini 1.5 Flash for speed and reliability)
+# Setup AI Architect Layers (Gemini 2.5 Flash for speed and reliability)
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-gemini_model = genai.GenerativeModel('gemini-1.5-flash')
+gemini_model = genai.GenerativeModel('gemini-2.5-flash')
 
 # LangChain LLM for Agentic AI (Phase 2)
 llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash", 
+    model="models/gemini-2.5-flash",
     google_api_key=st.secrets["GEMINI_API_KEY"]
 )
 
