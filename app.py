@@ -66,22 +66,56 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 ])
 
 with tab1:
-    st.subheader("High-Level Performance (Owner's View)")
-    kpi1, kpi2, kpi3 = st.columns(3)
-    sales_val = filtered_df['Sales'].sum()
-    profit_val = filtered_df['Profit'].sum()
+    st.subheader("📈 Owner's Strategic Overview")
+    # Architect's Calculation for Owner KPIs
+    total_sales = filtered_df['Sales'].sum()
+    total_profit = filtered_df['Profit'].sum()
+    monthly_target = 500000  # Example Target for an Ahmedabad SME
+    sq_ft = 2000  # Standard Showroom Size
     
-    kpi1.metric("Total Sales", f"₹{sales_val:,.0f}")
-    kpi2.metric("Net Profit", f"₹{profit_val:,.0f}", delta=f"{(profit_val/sales_val)*100:.1f}% Margin" if sales_val != 0 else "0%")
-    kpi3.metric("Orders", len(filtered_df))
+    o_col1, o_col2, o_col3 = st.columns(3)
     
+    # KPI: Net Profit (Target vs Achieved)
+    o_col1.metric("Net Profit vs Target", f"₹{total_profit:,.0f}", 
+                  delta=f"{((total_profit/monthly_target)*100)-100:.1f}% of Target")
+    
+    # KPI: Sales per Square Foot (SSPD)
+    o_col2.metric("Sales per Sq. Ft. (SSPD)", f"₹{total_sales/sq_ft:,.2f}", 
+                  help="Total Sales divided by 2,000 Sq. Ft.")
+    
+    # KPI: Budget vs Profit (Assuming a 15% operating budget)
+    operating_budget = total_sales * 0.15
+    o_col3.metric("Profit vs Budget", f"₹{total_profit:,.0f}", 
+                  delta=f"Budget: ₹{operating_budget:,.0f}", delta_color="normal")    
     fig_sales = px.line(filtered_df.groupby('Order Date')['Sales'].sum().reset_index(), 
                         x='Order Date', y='Sales', title="Revenue Trend (Gujarat Clusters)")
     st.plotly_chart(fig_sales, use_container_width=True)
 
 with tab2:
-    st.subheader("Manager's View (Operational Risk)")
-    col1, col2 = st.columns(2)
+    st.subheader("⚙️ Manager's Operational Desk")
+    
+    # Architect's Calculation for Manager KPIs
+    total_orders = filtered_df['Order ID'].nunique()
+    total_units = filtered_df['Quantity'].sum()
+    
+    m_col1, m_col2, m_col3, m_col4 = st.columns(4)
+    
+    # KPI: Average Bill Value (ABV)
+    abv = total_sales / total_orders if total_orders > 0 else 0
+    m_col1.metric("Avg Bill Value (ABV)", f"₹{abv:,.2f}")
+    
+    # KPI: Average Sale Price (ASP)
+    asp = total_sales / total_units if total_units > 0 else 0
+    m_col2.metric("Avg Sale Price (ASP)", f"₹{asp:,.2f}")
+    
+    # KPI: Unit Per Transaction (UPT)
+    upt = total_units / total_orders if total_orders > 0 else 0
+    m_col3.metric("Units Per Txn (UPT)", f"{upt:.2f}")
+    
+    # KPI: Conversion (Simulated based on footfall)
+    footfall = 5000 # Example Monthly Footfall
+    conversion = (total_orders / footfall) * 100
+    m_col4.metric("Conversion Rate", f"{conversion:.1f}%")    col1, col2 = st.columns(2)
     with col1:
         st.write("**Top Loss-Making Products**")
         loss_df = filtered_df[filtered_df['Profit'] < 0].groupby('Product Name')['Profit'].sum().nsmallest(5).reset_index()
